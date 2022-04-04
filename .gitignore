@@ -1,5 +1,7 @@
 .env
-.database
+.docker/database/*
+.docker/logs/*
+
 .idea
 
 site/*
