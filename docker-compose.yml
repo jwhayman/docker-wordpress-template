@@ -33,6 +33,8 @@ services:
     restart: always
     depends_on:
       - wordpress
+    environment:
+      NGINX_HOST: ${COMPOSE_PROJECT_NAME}.localhost
     ports:
       - 80:80
     volumes:

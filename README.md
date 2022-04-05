@@ -5,9 +5,8 @@ This Docker application sets up an environment for developing your WordPress the
 
 ### How to use
 1. Clone repository
-2. Copy `.env.example` to `.env`
-3. Update environment variables in `.env` file
-4. Run `docker-compose up`
+2. `chmod u+x install.sh`
+3. `./install.sh example.com`
 
 ### Features
 - Tools
@@ -17,3 +16,7 @@ This Docker application sets up an environment for developing your WordPress the
 
 ### To-do
 - [ ] HTTPS support
+- [ ] Initialize WordPress site automatically
+- [ ] Build options
+  - [ ] Theme (roots/sage, child theme)
+  - [ ] Plugins
