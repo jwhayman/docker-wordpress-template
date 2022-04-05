@@ -5,7 +5,6 @@ This Docker application sets up an environment for developing your WordPress the
 
 ### How to use
 1. Clone repository
-2. `chmod u+x install.sh`
 3. `./install.sh example.com`
 
 ### Features
