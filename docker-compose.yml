@@ -1,85 +1,86 @@
-name: ${COMPOSE_PROJECT_NAME}
-
 services:
   mariadb:
-    container_name: ${COMPOSE_PROJECT_NAME}_database
-    image: mariadb:latest
+    container_name: "${COMPOSE_PROJECT_NAME}-database"
+    image: "mariadb:latest"
     restart: always
     environment:
-      MARIADB_USER: ${DB_USER}
-      MARIADB_PASSWORD: ${DB_PASS}
-      MARIADB_DATABASE: ${COMPOSE_PROJECT_NAME}
-      MARIADB_RANDOM_ROOT_PASSWORD: yes
+      MARIADB_USER: "${DB_USER}"
+      MARIADB_PASSWORD: "${DB_PASS}"
+      MARIADB_DATABASE: "${COMPOSE_PROJECT_NAME}"
+      MARIADB_RANDOM_ROOT_PASSWORD: "yes"
     volumes:
-      - ${PWD}.docker/database:/var/lib/mysql
+      - "${PWD}.docker/database:/var/lib/mysql"
 
   wordpress:
-    container_name: ${COMPOSE_PROJECT_NAME}_wordpress
-    image: wordpress:php7.4-fpm
+    container_name: "${COMPOSE_PROJECT_NAME}-wordpress"
+    image: "wordpress:php7.4-fpm"
     restart: always
     depends_on:
       - mariadb
     environment:
       WORDPRESS_DB_HOST: mariadb
-      WORDPRESS_DB_USER: ${DB_USER}
-      WORDPRESS_DB_PASSWORD: ${DB_PASS}
-      WORDPRESS_DB_NAME: ${COMPOSE_PROJECT_NAME}
+      WORDPRESS_DB_USER: "${DB_USER}"
+      WORDPRESS_DB_PASSWORD: "${DB_PASS}"
+      WORDPRESS_DB_NAME: "${COMPOSE_PROJECT_NAME}"
     volumes:
-      - wordpress:/var/www/html
+      - "wordpress:/var/www/html"
+      - type: bind
+        source: "${PWD}/.docker/php.ini"
+        target: "/usr/local/etc/php/php.ini"
 
   nginx:
-    container_name: ${COMPOSE_PROJECT_NAME}_nginx
-    image: nginx:latest
+    container_name: "${COMPOSE_PROJECT_NAME}-nginx"
+    image: "nginx:latest"
     restart: always
     depends_on:
       - wordpress
     environment:
-      NGINX_HOST: ${COMPOSE_PROJECT_NAME}.localhost
+      NGINX_HOST: "${COMPOSE_PROJECT_NAME}.localhost"
     ports:
-      - 80:80
+      - "80:80"
     volumes:
-      - wordpress:/var/www/html
-      - ${PWD}/.docker/logs:/var/log/nginx
+      - "wordpress:/var/www/html"
+      - "${PWD}/.docker/logs:/var/log/nginx"
       - type: bind
-        source: ./.docker/site.conf
-        target: /etc/nginx/conf.d/site.conf
+        source: "${PWD}/.docker/site.conf"
+        target: "/etc/nginx/conf.d/site.conf"
 
   wp-cli:
-    container_name: ${COMPOSE_PROJECT_NAME}_wpcli
-    image: wordpress:cli-php7.4
+    container_name: "${COMPOSE_PROJECT_NAME}-wpcli"
+    image: "wordpress:cli-php7.4"
     depends_on:
       - mariadb
       - wordpress
     environment:
       WORDPRESS_DB_HOST: mariadb
-      WORDPRESS_DB_USER: ${DB_USER}
-      WORDPRESS_DB_PASSWORD: ${DB_PASS}
-      WORDPRESS_DB_NAME: ${COMPOSE_PROJECT_NAME}
+      WORDPRESS_DB_USER: "${DB_USER}"
+      WORDPRESS_DB_PASSWORD: "${DB_PASS}"
+      WORDPRESS_DB_NAME: "${COMPOSE_PROJECT_NAME}"
     volumes:
-      - wordpress:/var/www/html
-    user: 33:33
-    command: wp cli info
+      - "wordpress:/var/www/html"
+    user: "33:33"
+    command: "wp cli info"
 
   composer:
-    container_name: ${COMPOSE_PROJECT_NAME}_composer
-    image: composer:latest
+    container_name: "${COMPOSE_PROJECT_NAME}-composer"
+    image: "composer:latest"
     depends_on:
       - wordpress
     volumes:
-      - wordpress:/var/www/html
+      - "wordpress:/var/www/html"
 
   node:
-    container_name: ${COMPOSE_PROJECT_NAME}_node
-    image: node:lts
+    container_name: "${COMPOSE_PROJECT_NAME}-node"
+    image: "node:lts"
     depends_on:
       - wordpress
     volumes:
-      - wordpress:/var/www/html
+      - "wordpress:/var/www/html"
 
 volumes:
   wordpress:
     driver: local
     driver_opts:
       type: none
-      device: ${PWD}/site
+      device: "${PWD}/site"
       o: bind
