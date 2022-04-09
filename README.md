@@ -5,13 +5,19 @@ This Docker application sets up an environment for developing your WordPress the
 
 ### How to use
 1. Clone repository
-3. `./install.sh example.com`
+2. `./install.sh`
 
 ### Features
 - Tools
   - wpcli
   - composer
   - npm/yarn
+- WordPress Plugins
+  - Classic Editor
+  - Query Monitor
+  - Disable Comments
+  - Custom Post Type UI
+  - SEO by Rank Math
 
 ### To-do
 - [ ] HTTPS support
@@ -19,3 +25,4 @@ This Docker application sets up an environment for developing your WordPress the
 - [ ] Build options
   - [ ] Theme (roots/sage, child theme)
   - [ ] Plugins
+- [ ] Mailhog for SMTP testing

@@ -9,7 +9,7 @@ services:
       MARIADB_DATABASE: "${COMPOSE_PROJECT_NAME}"
       MARIADB_RANDOM_ROOT_PASSWORD: "yes"
     volumes:
-      - "${PWD}.docker/database:/var/lib/mysql"
+      - "${PWD}/.docker/database:/var/lib/mysql"
 
   wordpress:
     container_name: "${COMPOSE_PROJECT_NAME}-wordpress"
@@ -18,10 +18,12 @@ services:
     depends_on:
       - mariadb
     environment:
-      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_HOST: "mariadb"
       WORDPRESS_DB_USER: "${DB_USER}"
       WORDPRESS_DB_PASSWORD: "${DB_PASS}"
       WORDPRESS_DB_NAME: "${COMPOSE_PROJECT_NAME}"
+      WORDPRESS_CONFIG_EXTRA: |
+        define('WP_ENVIRONMENT_TYPE', 'development');
     volumes:
       - "wordpress:/var/www/html"
       - type: bind
