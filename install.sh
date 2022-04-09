@@ -36,7 +36,7 @@ echo "Installing WordPress"
 docker-compose run --rm wp-cli wp core install --url="${name}.localhost" --title="${site_title}" --admin_user="${admin_user}" --admin_email="${admin_email}"
 
 echo "Installing plugins"
-docker-compose run --rm wpcli wp plugin delete hello akismet
-docker-compose run --rm wpcli wp plugin install classic-editor query-monitor disable-comments custom-post-type-ui seo-by-rank-math --activate
+docker-compose run --rm wp-cli wp plugin delete hello akismet
+docker-compose run --rm wp-cli wp plugin install classic-editor query-monitor disable-comments custom-post-type-ui seo-by-rank-math --activate
 
 echo "Script execution completed"
