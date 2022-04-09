@@ -70,6 +70,7 @@ services:
       - wordpress
     volumes:
       - "wordpress:/var/www/html"
+    working_dir: "/var/www/html"
 
   node:
     container_name: "${COMPOSE_PROJECT_NAME}-node"
@@ -78,6 +79,7 @@ services:
       - wordpress
     volumes:
       - "wordpress:/var/www/html"
+    working_dir: "/var/www/html"
 
 volumes:
   wordpress:

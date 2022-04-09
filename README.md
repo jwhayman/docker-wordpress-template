@@ -21,7 +21,7 @@ This Docker application sets up an environment for developing your WordPress the
 
 ### To-do
 - [ ] HTTPS support
-- [ ] Initialize WordPress site automatically
+- [ ] WP Debug
 - [ ] Build options
   - [ ] Theme (roots/sage, child theme)
   - [ ] Plugins
