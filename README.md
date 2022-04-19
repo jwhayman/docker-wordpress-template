@@ -18,11 +18,13 @@ This Docker application sets up an environment for developing your WordPress the
   - Disable Comments
   - Custom Post Type UI
   - SEO by Rank Math
+  - WP Mail SMTP
 
 ### To-do
 - [ ] HTTPS support
 - [ ] WP Debug
 - [ ] Build options
-  - [ ] Theme (roots/sage, child theme)
+  - [ ] Theme (child theme)
   - [ ] Plugins
 - [ ] Mailhog for SMTP testing
+- [ ] Aliases for tools

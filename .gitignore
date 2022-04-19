@@ -3,9 +3,12 @@
 .docker/logs/*
 
 .idea
+node_modules
+dist
 
 site/*
 !site/wp-content/
+site/wp-content/uploads
 
 site/wp-content/themes/*
 !site/wp-content/themes/your-theme-here
