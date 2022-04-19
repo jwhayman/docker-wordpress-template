@@ -22,7 +22,7 @@ services:
       WORDPRESS_DB_USER: "${DB_USER}"
       WORDPRESS_DB_PASSWORD: "${DB_PASS}"
       WORDPRESS_DB_NAME: "${COMPOSE_PROJECT_NAME}"
-      WORDPRESS_DEBUG: true
+      WORDPRESS_DEBUG: "true"
       WORDPRESS_CONFIG_EXTRA: |
         define('WP_ENVIRONMENT_TYPE', 'development');
         define('FS_METHOD', 'direct');
