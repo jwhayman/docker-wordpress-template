@@ -14,6 +14,7 @@ touch .env
 printf "COMPOSE_PROJECT_NAME=${name_underscored}\n" >>.env
 printf "DB_USER=${name_underscored}\n" >>.env
 printf "DB_PASS=%s\n" $(openssl rand -base64 24) >>.env
+printf "XDEBUG_HOST=\n" >>.env
 
 echo "Updating nginx config"
 sed -i "s/SERVER_NAME/${name}/g" ./.docker/site.conf
