@@ -8,6 +8,8 @@ services:
       MARIADB_PASSWORD: "${DB_PASS}"
       MARIADB_DATABASE: "${COMPOSE_PROJECT_NAME}"
       MARIADB_RANDOM_ROOT_PASSWORD: "yes"
+    ports:
+      - "3306:3306"
     volumes:
       - "${PWD}/.docker/database:/var/lib/mysql"
 
