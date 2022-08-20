@@ -1,0 +1,47 @@
+upstream php {
+    server wordpress:9000 max_fails=3 fail_timeout=30s;
+}
+
+server {
+    listen 80;
+    server_name ${NGINX_HOST};
+
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name ${NGINX_HOST};
+        root /var/www/html;
+        index index.php;
+
+        ssl_certificate /etc/ssl/localhost.crt;
+        ssl_certificate_key /etc/ssl/localhost.key;
+
+        location = /favicon.ico {
+            log_not_found off;
+            access_log off;
+        }
+
+        location = /robots.txt {
+            allow all;
+            log_not_found off;
+            access_log off;
+        }
+
+        location / {
+                try_files $uri $uri/ /index.php?$args;
+        }
+
+        location ~ \.php$ {
+                include fastcgi_params;
+                fastcgi_intercept_errors on;
+                fastcgi_pass php;
+                fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        }
+
+        location ~* \.(js|css|png|jpg|jpeg|gif|ico)$ {
+                expires max;
+                log_not_found off;
+        }
+}

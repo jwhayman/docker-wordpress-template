@@ -1,0 +1,61 @@
+services:
+  wordpress:
+    build: ./docker/wordpress
+    depends_on:
+      - mariadb
+    environment:
+      WORDPRESS_DB_HOST: mariadb
+      WORDPRESS_DB_USER: ${DB_USER}
+      WORDPRESS_DB_PASSWORD: ${DB_PASS}
+      WORDPRESS_DB_NAME: ${DB_NAME}
+      WORDPRESS_DEBUG: "true"
+      WORDPRESS_CONFIG_EXTRA: >
+        define('WP_ENVIRONMENT_TYPE', 'development');
+        define('FS_METHOD', 'direct');
+      XDEBUG_CONFIG: client_host=${XDEBUG_HOST}
+    volumes:
+      - wordpress:/var/www/html
+      - ./docker/wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins
+      - ./docker/wordpress/php.ini:/usr/local/etc/php/conf.d/custom.php.ini
+
+  mariadb:
+    image: mariadb:10.8
+    environment:
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASS}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_RANDOM_ROOT_PASSWORD: "yes"
+    volumes:
+      - ./docker/mariadb:/var/lib/mysql
+
+  nginx:
+    build: ./docker/nginx
+    depends_on:
+      - wordpress
+    ports:
+      - 80:80
+      - 443:443
+    environment:
+      NGINX_HOST: ${HOST_NAME}
+    volumes:
+      - wordpress:/var/www/html
+      - ./docker/nginx/templates:/etc/nginx/templates
+      - ./docker/nginx/logs:/var/log/nginx
+
+  node:
+    image: node:lts-alpine
+    volumes:
+      - wordpress:/var/www/html
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - 8025:8025
+
+volumes:
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      device: ./site
+      o: bind

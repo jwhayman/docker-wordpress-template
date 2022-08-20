@@ -1,0 +1,14 @@
+.env
+.docker/mariadb/*
+.docker/nginx/logs/*
+
+.idea
+
+site/*
+!site/wp-content/
+
+site/wp-content/themes/*
+!site/wp-content/themes/your-theme-here
+
+site/wp-content/plugins/*
+!site/wp-content/plugins/your-plugin-here
