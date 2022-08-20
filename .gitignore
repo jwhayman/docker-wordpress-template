@@ -4,8 +4,9 @@
 
 .idea
 
+!.gitkeep
+
 site/*
-!site/.gitkeep
 !site/wp-content/
 
 site/wp-content/themes/*
