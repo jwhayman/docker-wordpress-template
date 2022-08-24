@@ -1,6 +1,6 @@
 .env
-.docker/mariadb/*
-.docker/nginx/logs/*
+/docker/mariadb/*
+/docker/nginx/logs/*
 
 .idea
 
