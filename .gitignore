@@ -1,11 +1,24 @@
+# Ignore Docker files
 .env
 /docker/mariadb/*
 /docker/nginx/logs/*
 
+# Ignore common IDE and WordPress directories and files
 .idea
+cache
+node_modules
+vendor
+.cache-loader
+nitropack
+mc_data
+languages
+updraft
+uploads/wpcf7_uploads
+advanced-cache-backup.php
 
 !.gitkeep
 
+# Ignore everything in wp-content except your theme and plugins
 site/*
 !site/wp-content/
 
