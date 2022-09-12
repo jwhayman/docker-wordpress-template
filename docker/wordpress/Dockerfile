@@ -8,7 +8,7 @@ RUN pecl config-set php_ini "$PHP_INI_DIR/php.ini" \
 
 # Install Xdebug
 RUN apt-get update \
-    && apt-get install ${PHPIZE_DEPS} \
+    && apt-get install -y ${PHPIZE_DEPS} \
     && pecl install xdebug-3.1.5 \
     && docker-php-ext-enable xdebug
 
@@ -20,8 +20,13 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && chown www-data:www-data composer.phar \
     && mv composer.phar /usr/local/bin/composer
 
-ENV COMPOSER_HOME /tmp
+ENV PATH="${PATH}:~/.composer/vendor/bin"
 
 # Install Composer packages
 RUN composer global require phpmailer/phpmailer \
     && composer global require wp-cli/wp-cli-bundle
+
+RUN echo alias 'wp="wp --allow-root"' >> ~/.bashrc
+
+# Install Maria DB client for WP-CLI
+RUN apt-get install -y mariadb-client

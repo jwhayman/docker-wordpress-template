@@ -17,9 +17,12 @@ services:
       - wordpress:/var/www/html
       - ./docker/wordpress/mu-plugins:/var/www/html/wp-content/mu-plugins
       - ./docker/wordpress/php.ini:/usr/local/etc/php/conf.d/custom.php.ini
+    working_dir: /var/www/html
 
   mariadb:
     image: mariadb:10.8
+    ports:
+      - 3306:3306
     environment:
       MARIADB_USER: ${DB_USER}
       MARIADB_PASSWORD: ${DB_PASS}
@@ -46,6 +49,7 @@ services:
     image: node:lts-alpine
     volumes:
       - wordpress:/var/www/html
+    working_dir: /var/www/html
 
   mailhog:
     image: mailhog/mailhog:latest

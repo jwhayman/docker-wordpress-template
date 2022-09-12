@@ -8,13 +8,20 @@
 cache
 node_modules
 vendor
+uploads
 .cache-loader
+wp-config.php
 nitropack
 mc_data
 languages
 updraft
-uploads/wpcf7_uploads
+ai1wm-backups
+advanced-cache.php
+db.php
 advanced-cache-backup.php
+object-cache.php
+*.sql
+.htaccess
 
 !.gitkeep
 
